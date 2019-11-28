@@ -122,6 +122,7 @@ app.post('/createAccount', upload.single('img'), (req, res) => {
 
 app.get('/logout', (req, res) => {
     user = null;
+    loggedIn = false
     res.redirect('/account_login')
 })
 
