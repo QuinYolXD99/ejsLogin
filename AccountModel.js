@@ -1,8 +1,11 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-let accountSchema =new Schema({
+let accountSchema = new Schema({
     firstname: {
+        type: String
+    },
+    src: {
         type: String
     },
     lastname: {

@@ -14,34 +14,41 @@
 
 <body>
     <div class="container">
-            <br><br>
-            <% if(error){ %>
-            <div class="alert alert-danger"><%= errorMessage %></div>
-            <% }
+        <br><br>
+        <% if(error){ %>
+        <div class="alert alert-danger"><%= errorMessage %></div>
+        <% }
             %>
-        <form action="/createAccount" method="POST">
+        <form action="/createAccount" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
-                <input type="email" name="email" class="form-control" id="exampleInputEmail1"
+                <input type="email" name="email" required class="form-control" id="exampleInputEmail1"
                     aria-describedby="emailHelp">
                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
                     else.</small>
             </div>
+            <div class="input-group mb-3">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" required name="img" id="inputGroupFile01"
+                        aria-describedby="inputGroupFileAddon01">
+                    <label class="custom-file-label" for="inputGroupFile01">Upload Profile Picture</label>
+                </div>
+            </div>
             <div class="form-group">
                 <label for="username">username</label>
-                <input type="text" name="username" class="form-control" id="username">
+                <input type="text" required name="username" class="form-control" id="username">
             </div>
             <div class="form-group">
                 <label for="firstname">firstname</label>
-                <input type="text" name="firstname" class="form-control" id="firstname">
+                <input type="text" required name="firstname" class="form-control" id="firstname">
             </div>
             <div class="form-group">
                 <label for="lastname">lastname</label>
-                <input type="text" name="lastname" class="form-control" id="lastname">
+                <input type="text" required name="lastname" class="form-control" id="lastname">
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Password</label>
-                <input type="password" name="password" class="form-control" id="exampleInputPassword1">
+                <input type="password" required name="password" class="form-control" id="exampleInputPassword1">
             </div>
 
             <button type="submit" class="btn btn-primary">Register</button>
