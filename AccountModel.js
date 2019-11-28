@@ -16,12 +16,6 @@ let accountSchema =new Schema({
         type: String,
         unique: true
     },
-    position: {
-        type: String
-    },
-    admin: {
-        type: Boolean
-    },
     password: {
         type: String
     }
