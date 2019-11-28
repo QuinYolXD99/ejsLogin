@@ -6,6 +6,7 @@ const PORT = 4000;
 const cors = require("cors");
 const url = require('url')
 const mongoose = require("mongoose");
+const AccountModel = require('./accountModel')
 console.log("connecting....");
 mongoose.connect("mongodb://localhost:27017/UserEJS", { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: true }, (err, data) => {
     if (err) {
@@ -29,6 +30,19 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+function checkUser(user) {
+    return new Promise((resolve , reject)=>{
+         AccountModel.findOne({username : user.username ,password:user.password},(err , data)=>{
+            if (!err){
+                user = data
+                resolve(data)
+            }else{
+                reject(err)
+            }
+        })
+    })
+}
+
 app.get('/', (req, res) => {
     if (user) {
         res.render('home', { page: 'home', user: user });
@@ -44,27 +58,35 @@ app.get('/account_login', (req, res) => {
 app.get('/register', (req, res) => {
     res.render('register', { page: 'register'})
 })
-function userExists(user) {
-    return users.some(function (el) {
-        return el.email === user.email && el.password == user.password;
-    });
-}
+
 app.post('/save', (req, res) => {
     // query to db
-    if (userExists(req.body)) {
-        res.render('home', { page: 'home', user })
-    } else {
+    checkUser(req.body).then(data=>{
+        if(data){
+            res.render('home', { page: 'home', user })
+        }else{
         res.redirect(url.format({
             pathname: "/account_login",
             query: { error: true },
         }))
-
-    }
+        }
+    }).catch(err=>{
+        res.send('something went wrong! \n' + err )
+    })
+ 
 })
 app.post('/createAccount', (req, res) => {
-    users.push(req.body);
-    user = req.body
-    res.redirect('/account_login')
+   let newUser = new AccountModel(reqBody);
+            newUser
+                .save()
+                .then((new_user) => {
+                    user = new_user
+                    res.redirect('/account_login')
+                })
+                .catch(err => {
+                   res.send('something went wrong! \n' + err )
+                });
+
 })
 app.listen(PORT, () => {
     console.log(`Server is running on Port:${PORT}`);
