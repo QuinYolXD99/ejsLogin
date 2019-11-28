@@ -6,6 +6,8 @@ const PORT = 4000;
 const cors = require("cors");
 const url = require('url')
 const mongoose = require("mongoose");
+const Accounts = require('./ejsLogin/model/account')
+
 console.log("connecting....");
 mongoose.connect("mongodb://localhost:27017/UserEJS", { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: true }, (err, data) => {
     if (err) {
